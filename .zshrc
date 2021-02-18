@@ -100,4 +100,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias docker-start="$HOME/Projects/docker/scripts/start.sh"
+alias docker-init="$HOME/Projects/docker/scripts/init.sh"
+alias docker-restart="$HOME/Projects/docker/scripts/restart.sh"
+alias docker-stop="$HOME/Projects/docker/scripts/stop.sh"
 alias node-init="$HOME/Projects/scripts/node-init.sh"
+alias job-init="$HOME/Projects/scripts/job-init.sh"
