@@ -8,6 +8,6 @@ nohup google-chrome https://blinking.atlassian.net/jira/your-work &
 cd ~/Projects/mailer-node
 code .
 
-echo "The day has officialy begun"
+echo "The day has officially begun"
 date
 
