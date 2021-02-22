@@ -1,7 +1,8 @@
 #!/bin/bash
 
-mkdir new-blinking-node
-cd new-blinking-node
+cd $PWD
+mkdir ${1:-new-node}
+cd ${1:-new-node}
 
 npm init -y
 
@@ -11,7 +12,9 @@ cd src
 mkdir api entities repositories router services utils
 
 touch utils/env-wrapper.ts
+touch router/router.ts
 touch app.ts
+touch status-codes.ts
 
 cd ..
 
@@ -19,6 +22,7 @@ touch ormconfig.ts
 touch main.ts
 touch .gitignore
 touch ./.env
+touch tsconfig.json
 
 FILE="./ormconfig.ts"
 
@@ -34,6 +38,7 @@ export default {
     database: env.pg.database,
     synchronize: env.orm.synchronize,
     logging: env.orm.logging,
+    dropSchema: false,
     entities: [
         "src/entities/**/*.ts"
     ],
@@ -155,10 +160,74 @@ class EnvWrapper {
 export const env = new EnvWrapper();
 EOM
 
-npm install --save express body-parser pg typeorm
-npm install --save-dev typescript ts-node @types/node@10.17.51 @types/body-parser
+FILE="./tsconfig.json"
 
-tsc --init
+/bin/cat <<EOM >$FILE
+{
+  "compilerOptions": {
+
+    "target": "es5",                          
+    "module": "commonjs",                     
+    "strict": true,                        
+    "noImplicitAny": true,                 
+    "strictNullChecks": true,              
+    "strictFunctionTypes": true,           
+    "strictBindCallApply": true,           
+    "strictPropertyInitialization": true,  
+    "noImplicitThis": true,                
+    "alwaysStrict": true,                 
+    "noUnusedLocals": true,                   
+    "noUnusedParameters": true,                
+    "esModuleInterop": true,                  
+    "experimentalDecorators": true,        
+    "skipLibCheck": true,                     
+    "forceConsistentCasingInFileNames": true
+    
+  }
+}
+EOM
+
+FILE="./src/app.ts"
+
+/bin/cat <<EOM >$FILE
+import express from "express";
+import { json } from "body-parser";
+import { sendInvalidMethodResponse } from "./utils/response-wrapper";
+
+const app: express.Application = express();
+
+app.use(json({ limit: "50mb", type: "application/json" }));
+
+app.use(sendInvalidMethodResponse);
+
+export default app;
+EOM
+
+
+FILE="./main.ts"
+
+/bin/cat <<EOM >$FILE
+import { env } from "./src/utils/env-wrapper";
+
+import { createConnection } from "typeorm";
+import { createServer } from "http";
+import app from "./src/app";
+
+(async function main(): Promise<void> {
+
+    try {
+
+        await createConnection();
+        createServer(app).listen(env.port);
+        
+    } catch (error) {
+        process.exit(-1);
+    }
+})();
+EOM
+
+npm install --save express body-parser pg typeorm reflect-metadata
+npm install --save-dev typescript ts-node @types/node@10.17.51 @types/body-parser nodemon @types/express
 
 git init
 git add -A
