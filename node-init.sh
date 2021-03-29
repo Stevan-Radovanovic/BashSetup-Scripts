@@ -121,6 +121,10 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+
+#env file
+.env
+
 EOM
 
 FILE="./src/utils/env-wrapper.ts"
@@ -192,13 +196,11 @@ FILE="./src/app.ts"
 /bin/cat <<EOM >$FILE
 import express from "express";
 import { json } from "body-parser";
-import { sendInvalidMethodResponse } from "./utils/response-wrapper";
 
 const app: express.Application = express();
 
 app.use(json({ limit: "50mb", type: "application/json" }));
 
-app.use(sendInvalidMethodResponse);
 
 export default app;
 EOM
@@ -207,6 +209,8 @@ EOM
 FILE="./main.ts"
 
 /bin/cat <<EOM >$FILE
+import { config } from "dotenv";
+config();
 import { env } from "./src/utils/env-wrapper";
 
 import { createConnection } from "typeorm";
