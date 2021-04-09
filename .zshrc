@@ -70,7 +70,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git battery)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -100,15 +100,22 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+RPROMPT='$(battery_pct_prompt)'
+
 alias docker-start="$HOME/Projects/docker/scripts/start.sh"
 alias docker-init="$HOME/Projects/docker/scripts/init.sh"
 alias docker-restart="$HOME/Projects/docker/scripts/restart.sh"
 alias docker-stop="$HOME/Projects/docker/scripts/stop.sh"
+
 alias node-init="$HOME/Projects/scripts/node-init.sh"
 alias job-init="$HOME/Projects/scripts/job-init.sh"
 
-alias k="kubectl "                                                                                                             
-alias kx="kubectx "                                                                                                            
-alias kns="kubens "                                                                                                            
-alias kl="kubectl logs -f  "                                                                                                   
-alias kp="kubectl get pod "                                                          
+alias gp="git push"
+alias gpl="git pull"
+alias ga="git add -A"
+alias gc="git commit -m"
+alias gh="git reset --hard"
+alias gf="git fetch --all"
+alias gcb="git checkout -b"
+
+autoload -U tetriscurses

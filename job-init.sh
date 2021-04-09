@@ -8,10 +8,10 @@ nohup google-chrome https://blinking.atlassian.net/jira/your-work &
 cd ~/Projects/mailer-node
 code .
 
+insomnia
+
 cd ~/Documents/Telegram
 ./Telegram
-
-insomnia
 
 echo "The day has officially begun"
 date
