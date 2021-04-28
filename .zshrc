@@ -81,35 +81,27 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
+#Battery Prompt for the right side of the terminal
 RPROMPT='$(battery_pct_prompt)'
 
+#Useful string constants
+export VPNPASS="F]*=Q+{wku+5Ar(P"
+export VPNGROUPPASS="vqm2ZC54tuv8PmmZ"
+
+#Useful javascript regular expressions
+export CLOGREGEX="(\/\/)?( )?(console.log\(){1}.*(\)){1}(;)?"
+
+#Aliases used for running local docker containers
 alias docker-start="$HOME/Projects/docker/scripts/start.sh"
 alias docker-init="$HOME/Projects/docker/scripts/init.sh"
 alias docker-restart="$HOME/Projects/docker/scripts/restart.sh"
 alias docker-stop="$HOME/Projects/docker/scripts/stop.sh"
 
+#Aliases for local bash scripts
 alias node-init="$HOME/Projects/scripts/node-init.sh"
 alias job-init="$HOME/Projects/scripts/job-init.sh"
 
+#Aliases for using git from the command line
 alias gp="git push"
 alias gpl="git pull"
 alias ga="git add -A"
@@ -118,4 +110,16 @@ alias gh="git reset --hard"
 alias gf="git fetch --all"
 alias gcb="git checkout -b"
 
+#Aliases for kubectl
+alias kubessh1="ssh-add ~/Desktop/logs/private.pem"
+alias kubessh2="ssh k8s@172.18.156.146"
+alias kubeall="kubectl get pod -n blinking"
+alias kubelog="kubectl logs -n blinking"
+
+#Other aliases
+alias blinking-vpn="sudo openvpn ~/Downloads/blinking-office-2020.ovpn"
+alias dock-down="sudo ip link set dev br-9876b94b4d2f down"
+
+#Tetris ahaha 
 autoload -U tetriscurses
+
